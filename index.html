@@ -1,2 +1,32 @@
-# Ado
-Me encanta la música de ado
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADO | Dark Stage</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+:root{--cyan:#00eaff;--blue:#176bff;--pink:#ff176b;--red:#ff2449;--bg:#070710}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:#fff;font-family:Orbitron,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 15% 30%,#102c6555,transparent 45%),radial-gradient(ellipse at 85% 60%,#790d3533,transparent 40%),repeating-linear-gradient(120deg,transparent 0 80px,#ffffff04 81px 82px)}
+nav{height:80px;padding:0 8%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff20;background:#070710bb;position:relative;z-index:2;backdrop-filter:blur(12px)}
+.logo{font-size:28px;font-weight:900;letter-spacing:5px;color:white;text-shadow:3px 0 var(--pink),-3px 0 var(--cyan)}
+nav a{color:#ccc;text-decoration:none;font-size:11px;letter-spacing:2px;margin-left:24px;transition:.2s}nav a:hover{color:var(--cyan)}
+.hero{min-height:690px;display:flex;align-items:center;position:relative;padding:70px 10%;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;width:38%;height:130%;top:-10%;filter:blur(70px);opacity:.17;transform:rotate(25deg);pointer-events:none}.hero:before{left:8%;background:var(--blue)}.hero:after{right:5%;background:var(--pink)}
+.content{position:relative;z-index:1;max-width:760px}.eyebrow{color:var(--cyan);letter-spacing:5px;font-size:12px;margin-bottom:24px}.hero h1{font-size:clamp(65px,13vw,150px);font-weight:900;line-height:.83;letter-spacing:-8px;text-shadow:5px 0 var(--pink),-4px 0 var(--blue);animation:flicker 5s infinite}.hero h1 span{display:block;color:transparent;-webkit-text-stroke:1px white;text-shadow:none;margin-left:35px}.jp{font-family:"Noto Sans JP",sans-serif;font-size:22px;letter-spacing:9px;margin:30px 0 15px;color:#ddd}.desc{font-family:Arial,sans-serif;color:#a9a9bd;line-height:1.8;max-width:450px;font-size:15px}.buttons{display:flex;gap:15px;flex-wrap:wrap;margin-top:32px}.btn{padding:15px 24px;text-decoration:none;font-size:11px;letter-spacing:2px;font-weight:bold;transition:.25s}.primary{background:var(--cyan);color:#070710;clip-path:polygon(0 0,100% 0,100% 75%,90% 100%,0 100%)}.secondary{border:1px solid #ffffff50;color:white}.btn:hover{transform:translateY(-4px);box-shadow:0 0 24px #00eaff44}
+.stamp{position:absolute;right:12%;top:23%;width:210px;height:210px;border:1px solid #ff176b88;border-radius:50%;display:grid;place-items:center;color:var(--pink);font-size:12px;letter-spacing:5px;transform:rotate(15deg);box-shadow:0 0 45px #ff176b22,inset 0 0 40px #ff176b11}.stamp b{font-size:60px;position:absolute;color:#ff176b22}
+.section{padding:80px 10%;border-top:1px solid #ffffff18}.section-label{color:var(--pink);font-size:11px;letter-spacing:5px;margin-bottom:14px}.section h2{font-size:clamp(30px,5vw,48px);margin-bottom:35px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{min-height:190px;padding:24px;background:linear-gradient(135deg,#141421,#0a0a12);border:1px solid #ffffff1b;position:relative;overflow:hidden;transition:.3s}.card:hover{transform:translateY(-6px);border-color:var(--cyan)}.card:after{content:"";position:absolute;width:100px;height:100px;border:20px solid #176bff18;transform:rotate(45deg);right:-30px;bottom:-35px}.number{color:var(--cyan);font-size:12px}.card h3{margin-top:30px;font-size:21px}.card p{font-family:Arial,sans-serif;color:#999;margin-top:10px;font-size:13px;line-height:1.6}.quote{text-align:center;padding:90px 20px;background:linear-gradient(90deg,#08122b,#160815,#08122b);font-size:clamp(20px,4vw,38px);font-weight:900;letter-spacing:2px}.quote span{color:var(--pink)}footer{padding:30px 8%;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#777;font-size:10px;letter-spacing:2px}
+@keyframes flicker{0%,94%,97%,100%{opacity:1}95%{opacity:.75}96%{opacity:.95}}@media(max-width:700px){nav{padding:0 5%;height:auto;min-height:75px;align-items:flex-start;padding-top:22px;padding-bottom:18px;gap:15px;flex-direction:column}nav a{margin:0 14px 0 0;font-size:10px}.hero{min-height:620px;padding:80px 7%}.hero h1{letter-spacing:-4px}.stamp{right:5%;top:9%;width:95px;height:95px;font-size:7px;letter-spacing:2px}.stamp b{font-size:30px}.cards{grid-template-columns:1fr}.section{padding:60px 7%}.jp{font-size:16px;letter-spacing:5px}}
+</style>
+</head>
+<body>
+<nav><div class="logo">ADO<span style="color:#00eaff">.</span></div><div><a href="#home">HOME</a><a href="#world">WORLD</a><a href="#music">VIBES</a></div></nav>
+<main>
+<section class="hero" id="home"><div class="content"><div class="eyebrow">✦ THE VOICE OF DARKNESS ✦</div><h1>UNLEASH<span>YOUR VOICE</span></h1><div class="jp">叫べ。世界へ。</div><p class="desc">Una voz que rompe el silencio. Un escenario donde la oscuridad se convierte en energía. Entra en el universo del J-pop más intenso.</p><div class="buttons"><a class="btn primary" href="#music">EXPLORE THE SOUND ↗</a><a class="btn secondary" href="#world">ENTER THE WORLD</a></div></div><div class="stamp"><b>アド</b> DARK POP ✦ JAPAN</div></section>
+<section class="section" id="world"><div class="section-label">01 / THE UNIVERSE</div><h2>WELCOME TO THE <span style="color:#00eaff">CHAOS.</span></h2><div class="cards"><article class="card"><div class="number">01 / VOICE</div><h3>Raw Emotion.</h3><p>Voces explosivas, sentimientos sin filtro y una energía imposible de ignorar.</p></article><article class="card"><div class="number">02 / VISUAL</div><h3>Dark Aesthetic.</h3><p>Sombras profundas, luces eléctricas y una identidad visual que desafía las reglas.</p></article><article class="card"><div class="number">03 / FREEDOM</div><h3>Be Unchained.</h3><p>No escondas tu lado más intenso. Haz ruido, siente la música y sé tú mismo.</p></article></div></section>
+<div class="quote">“DON’T JUST LISTEN.<br><span>FEEL THE SCREAM.</span>”</div>
+<section class="section" id="music"><div class="section-label">02 / SOUND ARCHIVE</div><h2>TURN UP THE <span style="color:#ff176b">VOLUME.</span></h2><div class="cards"><article class="card"><div class="number">TRACK 001</div><h3>CHAOS MODE</h3><p>Dark energy · Electric pulse · Unleashed</p></article><article class="card"><div class="number">TRACK 002</div><h3>BLUE SCREAM</h3><p>Midnight blue · Broken silence · Reborn</p></article><article class="card"><div class="number">TRACK 003</div><h3>RED REBELLION</h3><p>Wild heart · Crimson lights · No limits</p></article></div></section>
+</main><footer><span>ADO // DARK STAGE EXPERIENCE</span><span>MADE FOR THE FEARLESS ✦ 2026</span></footer>
+</body></html>
