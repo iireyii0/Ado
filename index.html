@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#070710">
-<title>ADO: RAGE OF THE STAGE</title>
-<style>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#070710">
+  <title>ADO: RAGE OF THE STAGE</title>
+  <style>
 :root{--cyan:#00eaff;--pink:#ff176b;--blue:#2866ff;--bg:#070710}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:#fff;font-family:Arial,"Noto Sans JP",sans-serif;overscroll-behavior:none;touch-action:none;user-select:none}
@@ -18,6 +18,7 @@ header{flex:0 0 auto;min-height:42px;padding:5px 12px;display:flex;align-items:c
 .top-controls{display:flex;gap:6px;align-items:center}
 #language,.top-button{color:white;background:#111126;border:1px solid #00eaff66;border-radius:5px;padding:7px;font-size:12px}
 #language option{background:#111126}
+.subpanel #language{display:block;min-width:180px;padding:10px;font-size:14px}
 .stats{flex:0 0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:5px 8px}
 .stat{min-width:0;padding:5px 7px;background:#111120d9;border:1px solid #ffffff13}
 .stat label{display:block;font-size:clamp(7px,1.5vh,10px);color:#9999b7;margin-bottom:3px;white-space:nowrap}
@@ -57,6 +58,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 @keyframes pulse{from{height:15%}to{height:100%}}
 .menu-version{margin-top:22px!important;color:#777a9d!important;letter-spacing:.18em;font-size:9px!important}
 .menu-options{position:absolute;left:57%;top:50%;transform:translateY(-50%);width:min(36%,390px)}
+@media(orientation:portrait){#app{position:absolute;top:0;left:100vw;width:100vh;height:100vw;min-height:0;transform:rotate(90deg);transform-origin:top left}}
 .menu-label{color:var(--pink);font-size:10px;letter-spacing:.3em;margin-bottom:18px}
 .menu-button{width:100%;min-height:46px;margin:5px 0;padding:10px 12px;display:flex;align-items:center;gap:12px;text-align:left;color:#d7d9ef;background:#ffffff05;border:1px solid #ffffff19;border-left:3px solid transparent;transition:.18s}
 .menu-button span{color:var(--cyan);font-size:10px}.menu-button b{flex:1;font-size:clamp(10px,1.4vw,14px);letter-spacing:.09em}.menu-button i{font-style:normal;color:#6d7398}
@@ -85,65 +87,105 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
-</head>
-<body>
-<div id="app">
-<header>
- <div class="logo">ADO // RAGE<small id="subtitle">REBELIÓN DEL ESCENARIO</small></div>
- <div class="top-controls">
-  <select id="language" aria-label="Idioma"><option value="es">🇪🇸 ES</option><option value="en">🇬🇧 EN</option><option value="ja">🇯🇵 日本語</option></select>
-  <button class="top-button" id="pauseButton" aria-label="Pausa">Ⅱ</button>
- </div>
-</header>
-<section class="stats" id="stats">
- <div class="stat"><label id="scoreLabel">PUNTUACIÓN</label><strong id="scoreText">000000</strong></div>
- <div class="stat"><label id="healthLabel">VIDA</label><strong id="healthText">100%</strong><div class="bar"><div id="healthBar"></div></div></div>
- <div class="stat"><label id="energyLabel">ENERGÍA</label><strong id="energyText">0%</strong><div class="bar"><div id="energyBar"></div></div></div>
- <div class="stat"><label id="bestLabel">RÉCORD</label><strong id="bestText">000000</strong></div>
-</section>
-<main id="gameArea"><div id="gameFrame">
- <canvas id="game" width="960" height="540"></canvas>
- <div id="overlay" class="menu-screen">
-  <div class="menu-art">
-   <div class="menu-eyebrow">音楽の反逆 // ADO PROJECT</div>
-   <h1>ADO<span>:</span><br>RAGE OF<br>THE STAGE</h1>
-   <p class="menu-subtitle" id="menuSubtitle">LA REBELIÓN COMIENZA CON TU VOZ</p>
-   <div class="soundwave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-   <p class="menu-version">NEON STAGE SYSTEM // 001</p>
+ </head>
+ <body>
+  <div id="app">
+   <header>
+    <div class="logo">
+     ADO // RAGE<small id="subtitle">REBELIÓN DEL ESCENARIO</small>
+    </div>
+    <div class="top-controls">
+     <button class="top-button" id="pauseButton" aria-label="Pausa">Ⅱ</button>
+    </div>
+   </header>
+   <section class="stats" id="stats">
+    <div class="stat">
+     <label id="scoreLabel">PUNTUACIÓN</label><strong id="scoreText">000000</strong>
+    </div>
+    <div class="stat">
+     <label id="healthLabel">VIDA</label><strong id="healthText">100%</strong>
+     <div class="bar">
+      <div id="healthBar"></div>
+     </div>
+    </div>
+    <div class="stat">
+     <label id="energyLabel">ENERGÍA</label><strong id="energyText">0%</strong>
+     <div class="bar">
+      <div id="energyBar"></div>
+     </div>
+    </div>
+    <div class="stat">
+     <label id="bestLabel">RÉCORD</label><strong id="bestText">000000</strong>
+    </div>
+   </section>
+   <main id="gameArea">
+    <div id="gameFrame">
+     <canvas id="game" width="960" height="540"></canvas>
+     <div id="overlay" class="menu-screen">
+      <div class="menu-art">
+       <div class="menu-eyebrow">音楽の反逆 // ADO PROJECT</div>
+       <h1>ADO<span>:</span>
+        <br>
+        RAGE OF
+        <br>
+        THE STAGE</h1>
+       <p class="menu-subtitle" id="menuSubtitle">LA REBELIÓN COMIENZA CON TU VOZ</p>
+       <div class="soundwave">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+       </div>
+       <p class="menu-version">NEON STAGE SYSTEM // 001</p>
+      </div>
+      <div class="menu-options" id="menuOptions">
+       <div class="menu-label" id="menuLabel">MENÚ PRINCIPAL</div>
+       <button class="menu-button selected" id="continueButton"><span>01</span><b id="continueText">JUGAR</b><i>↗</i></button>
+       <button class="menu-button" id="settingsButton"><span>02</span><b id="settingsText">AJUSTES</b><i>↗</i></button>
+       <button class="menu-button" id="quitButton"><span>03</span><b id="quitText">SALIR</b><i>↗</i></button>
+       <div class="menu-footer">
+        <span>● <span id="systemStatus">SISTEMA LISTO</span></span><span>ADO // 2026</span>
+       </div>
+      </div>
+      <div class="subpanel" id="settingsPanel" hidden>
+       <h2 id="settingsTitle">AJUSTES</h2>
+       <label id="languageSettingLabel" for="language">IDIOMA</label> <select id="language" aria-label="Idioma"><option value="es">🇪🇸 Español</option><option value="en">🇬🇧 English</option><option value="ja">🇯🇵 日本語</option></select>
+       <p id="settingsNote" style="color:#b9bad2;font-size:12px">Selecciona el idioma que prefieras.</p>
+       <button class="menu-button" id="backSettingsButton"><span>←</span><b id="backSettingsText">VOLVER</b><i>↩</i></button>
+      </div>
+      <div class="subpanel" id="pausePanel" hidden>
+       <h2 id="pauseTitle">JUEGO EN PAUSA</h2>
+       <button class="menu-button" id="resumeButton"><span>▶</span><b id="resumeText">CONTINUAR</b><i>↗</i></button>
+       <button class="menu-button" id="menuButton"><span>↩</span><b id="backMenuText">MENÚ PRINCIPAL</b><i>↗</i></button>
+      </div>
+      <div class="panel" id="messagePanel">
+       <div class="kicker" id="kicker">✦ LA VOZ DE LA REBELIÓN ✦</div>
+       <h1 id="overlayTitle">RABIA EN
+        <br>
+        EL ESCENARIO</h1>
+       <p id="overlayDesc">El concierto ha sido invadido.</p>
+       <p id="overlayHint">MOVER · SALTAR · ATACAR</p>
+       <button id="mainButton">▶ COMENZAR</button>
+      </div>
+     </div>
+    </div>
+   </main>
+   <section id="controls">
+    <div class="control-group">
+     <button class="control" id="leftBtn" aria-label="Mover a la izquierda">◀</button>
+     <button class="control" id="rightBtn" aria-label="Mover a la derecha">▶</button>
+    </div>
+    <div class="control-group">
+     <button class="control action" id="jumpBtn" aria-label="Saltar">⬆</button>
+     <button class="control action" id="attackBtn" aria-label="Atacar">✦</button>
+     <button class="control action" id="powerBtn" aria-label="Poder especial">⚡</button>
+    </div>
+   </section>
+   <div class="help" id="helpText">Esquiva los pinchos · Derrota enemigos · Recoge notas musicales para cargar tu poder</div>
   </div>
-    <div class="menu-options" id="menuOptions">
-   <div class="menu-label" id="menuLabel">MENÚ PRINCIPAL</div>
-   <button class="menu-button selected" id="newGameButton"><span>01</span><b id="newGameText">NUEVA PARTIDA</b><i>↗</i></button>
-   <button class="menu-button" id="continueButton"><span>02</span><b id="continueText">CONTINUAR</b><i>↗</i></button>
-   <button class="menu-button" id="settingsButton"><span>03</span><b id="settingsText">AJUSTES</b><i>↗</i></button>
-   <button class="menu-button" id="quitButton"><span>04</span><b id="quitText">SALIR</b><i>↗</i></button>
-   <div class="menu-footer"><span>● <span id="systemStatus">SISTEMA LISTO</span></span><span>ADO // 2026</span></div>
-  </div>
-  <div class="subpanel" id="settingsPanel" hidden>
-   <h2 id="settingsTitle">AJUSTES</h2><label id="languageSettingLabel" for="language">IDIOMA</label>
-   <p id="settingsNote" style="color:#b9bad2;font-size:12px">Selecciona el idioma en el selector superior.</p>
-   <button class="menu-button" id="backSettingsButton"><span>←</span><b id="backSettingsText">VOLVER</b><i>↩</i></button>
-  </div>
-  <div class="subpanel" id="pausePanel" hidden>
-   <h2 id="pauseTitle">JUEGO EN PAUSA</h2>
-   <button class="menu-button" id="resumeButton"><span>▶</span><b id="resumeText">CONTINUAR</b><i>↗</i></button>
-   <button class="menu-button" id="menuButton"><span>↩</span><b id="backMenuText">MENÚ PRINCIPAL</b><i>↗</i></button>
-  </div>
-  <div class="panel" id="messagePanel"><div class="kicker" id="kicker">✦ LA VOZ DE LA REBELIÓN ✦</div><h1 id="overlayTitle">RABIA EN<br>EL ESCENARIO</h1><p id="overlayDesc">El concierto ha sido invadido.</p><p id="overlayHint">MOVER · SALTAR · ATACAR</p><button id="mainButton">▶ COMENZAR</button></div>
- </div>
-</div></main>
-<section id="controls">
- <div class="control-group"><button class="control" id="leftBtn" aria-label="Mover a la izquierda">◀</button><button class="control" id="rightBtn" aria-label="Mover a la derecha">▶</button></div>
- <div class="control-group"><button class="control action" id="jumpBtn" aria-label="Saltar">⬆</button><button class="control action" id="attackBtn" aria-label="Atacar">✦</button><button class="control action" id="powerBtn" aria-label="Poder especial">⚡</button></div>
-</section>
-<div class="help" id="helpText">Esquiva los pinchos · Derrota enemigos · Recoge notas musicales para cargar tu poder</div>
-</div>
-<script>
+  <script>
 "use strict";
 const translations={
-es:{subtitle:"REBELIÓN DEL ESCENARIO",score:"PUNTUACIÓN",health:"VIDA",energy:"ENERGÍA",best:"RÉCORD",kicker:"✦ LA VOZ DE LA REBELIÓN ✦",title:"RABIA EN<br>EL ESCENARIO",intro:"El concierto ha sido invadido.<br>Salta, ataca y recupera el escenario.",hint:"← → MOVER · ESPACIO SALTAR · X ATACAR · C PODER",start:"▶ COMENZAR",resume:"▶ CONTINUAR",restart:"↻ VOLVER A JUGAR",pause:"JUEGO EN PAUSA",paused:"Respira. El escenario te espera.",over:"EL CONCIERTO HA TERMINADO",result:"Puntuación final: ",help:"Esquiva los pinchos · Derrota enemigos · Recoge notas musicales para cargar tu poder",left:"MOVER A LA IZQUIERDA",right:"MOVER A LA DERECHA",jump:"SALTAR",attack:"ATACAR",power:"PODER ESPECIAL",stage:"ESCENARIO",boss:"¡PODER DESATADO!",combo:"¡COMBO!",damaged:"¡GOLPE!",newBest:"¡NUEVO RÉCORD!",finalLine:"El escenario nunca olvida tu voz.",menuLabel:"MENÚ PRINCIPAL",newGame:"NUEVA PARTIDA",continueGame:"CONTINUAR",settings:"AJUSTES",quit:"SALIR",menuSubtitle:"LA REBELIÓN COMIENZA CON TU VOZ",systemStatus:"SISTEMA LISTO",back:"VOLVER",menuBack:"MENÚ PRINCIPAL",settingsTitle:"AJUSTES",languageSetting:"IDIOMA",quitMessage:"Para salir, cierra la pestaña del navegador.",settingsNote:"Selecciona el idioma en el selector superior."},
-en:{subtitle:"STAGE REBELLION",score:"SCORE",health:"HEALTH",energy:"ENERGY",best:"BEST",kicker:"✦ THE VOICE OF REBELLION ✦",title:"RAGE OF<br>THE STAGE",intro:"The concert has been invaded.<br>Jump, attack, and reclaim the stage.",hint:"← → MOVE · SPACE JUMP · X ATTACK · C POWER",start:"▶ START GAME",resume:"▶ RESUME",restart:"↻ PLAY AGAIN",pause:"GAME PAUSED",paused:"Take a breath. The stage awaits.",over:"THE CONCERT IS OVER",result:"Final score: ",help:"Dodge spikes · Defeat enemies · Collect music notes to charge your power",left:"MOVE LEFT",right:"MOVE RIGHT",jump:"JUMP",attack:"ATTACK",power:"SPECIAL POWER",stage:"STAGE",boss:"POWER UNLEASHED!",combo:"COMBO!",damaged:"HIT!",newBest:"NEW HIGH SCORE!",finalLine:"The stage never forgets your voice.",menuLabel:"MAIN MENU",newGame:"NEW GAME",continueGame:"CONTINUE",settings:"SETTINGS",quit:"QUIT",menuSubtitle:"THE REBELLION BEGINS WITH YOUR VOICE",systemStatus:"SYSTEM READY",back:"BACK",menuBack:"MAIN MENU",settingsTitle:"SETTINGS",languageSetting:"LANGUAGE",quitMessage:"Close this browser tab to leave.",settingsNote:"Choose a language from the selector above."},
-ja:{subtitle:"ステージの反逆",score:"スコア",health:"ライフ",energy:"エネルギー",best:"最高記録",kicker:"✦ 反逆の歌声 ✦",title:"ステージの<br>怒り",intro:"コンサートが襲撃された！<br>跳び、戦い、ステージを取り戻せ。",hint:"← → 移動 · SPACE ジャンプ · X 攻撃 · C 必殺技",start:"▶ ゲーム開始",resume:"▶ 再開",restart:"↻ もう一度",pause:"一時停止",paused:"深呼吸して。ステージが待っている。",over:"コンサート終了",result:"最終スコア：",help:"トゲを避けろ · 敵を倒せ · 音符を集めて力をためろ",left:"左へ移動",right:"右へ移動",jump:"ジャンプ",attack:"攻撃",power:"必殺技",stage:"ステージ",boss:"力を解き放て！",combo:"コンボ！",damaged:"ダメージ！",newBest:"新記録！",finalLine:"ステージはあなたの声を忘れない。",menuLabel:"メインメニュー",newGame:"ゲーム開始",continueGame:"続ける",settings:"設定",quit:"終了",menuSubtitle:"反逆はその歌声から始まる",systemStatus:"システム準備完了",back:"戻る",menuBack:"メインメニュー",settingsTitle:"設定",languageSetting:"言語",quitMessage:"終了するにはブラウザのタブを閉じてください。",settingsNote:"上のセレクターから言語を選んでください。"}
+es:{subtitle:"REBELIÓN DEL ESCENARIO",score:"PUNTUACIÓN",health:"VIDA",energy:"ENERGÍA",best:"RÉCORD",kicker:"✦ LA VOZ DE LA REBELIÓN ✦",title:"RABIA EN<br>EL ESCENARIO",intro:"El concierto ha sido invadido.<br>Salta, ataca y recupera el escenario.",hint:"← → MOVER · ESPACIO SALTAR · X ATACAR · C PODER",start:"▶ COMENZAR",resume:"▶ CONTINUAR",restart:"↻ VOLVER A JUGAR",pause:"JUEGO EN PAUSA",paused:"Respira. El escenario te espera.",over:"EL CONCIERTO HA TERMINADO",result:"Puntuación final: ",help:"Esquiva los pinchos · Derrota enemigos · Recoge notas musicales para cargar tu poder",left:"MOVER A LA IZQUIERDA",right:"MOVER A LA DERECHA",jump:"SALTAR",attack:"ATACAR",power:"PODER ESPECIAL",stage:"ESCENARIO",boss:"¡PODER DESATADO!",combo:"¡COMBO!",damaged:"¡GOLPE!",newBest:"¡NUEVO RÉCORD!",finalLine:"El escenario nunca olvida tu voz.",menuLabel:"MENÚ PRINCIPAL",newGame:"JUGAR",continueGame:"JUGAR",settings:"AJUSTES",quit:"SALIR",menuSubtitle:"LA REBELIÓN COMIENZA CON TU VOZ",systemStatus:"SISTEMA LISTO",back:"VOLVER",menuBack:"MENÚ PRINCIPAL",settingsTitle:"AJUSTES",languageSetting:"IDIOMA",quitMessage:"Para salir, cierra la pestaña del navegador.",settingsNote:"Selecciona el idioma que prefieras."},
+en:{subtitle:"STAGE REBELLION",score:"SCORE",health:"HEALTH",energy:"ENERGY",best:"BEST",kicker:"✦ THE VOICE OF REBELLION ✦",title:"RAGE OF<br>THE STAGE",intro:"The concert has been invaded.<br>Jump, attack, and reclaim the stage.",hint:"← → MOVE · SPACE JUMP · X ATTACK · C POWER",start:"▶ START GAME",resume:"▶ RESUME",restart:"↻ PLAY AGAIN",pause:"GAME PAUSED",paused:"Take a breath. The stage awaits.",over:"THE CONCERT IS OVER",result:"Final score: ",help:"Dodge spikes · Defeat enemies · Collect music notes to charge your power",left:"MOVE LEFT",right:"MOVE RIGHT",jump:"JUMP",attack:"ATTACK",power:"SPECIAL POWER",stage:"STAGE",boss:"POWER UNLEASHED!",combo:"COMBO!",damaged:"HIT!",newBest:"NEW HIGH SCORE!",finalLine:"The stage never forgets your voice.",menuLabel:"MAIN MENU",newGame:"PLAY",continueGame:"PLAY",settings:"SETTINGS",quit:"QUIT",menuSubtitle:"THE REBELLION BEGINS WITH YOUR VOICE",systemStatus:"SYSTEM READY",back:"BACK",menuBack:"MAIN MENU",settingsTitle:"SETTINGS",languageSetting:"LANGUAGE",quitMessage:"Close this browser tab to leave.",settingsNote:"Choose your preferred language."},
+ja:{subtitle:"ステージの反逆",score:"スコア",health:"ライフ",energy:"エネルギー",best:"最高記録",kicker:"✦ 反逆の歌声 ✦",title:"ステージの<br>怒り",intro:"コンサートが襲撃された！<br>跳び、戦い、ステージを取り戻せ。",hint:"← → 移動 · SPACE ジャンプ · X 攻撃 · C 必殺技",start:"▶ ゲーム開始",resume:"▶ 再開",restart:"↻ もう一度",pause:"一時停止",paused:"深呼吸して。ステージが待っている。",over:"コンサート終了",result:"最終スコア：",help:"トゲを避けろ · 敵を倒せ · 音符を集めて力をためろ",left:"左へ移動",right:"右へ移動",jump:"ジャンプ",attack:"攻撃",power:"必殺技",stage:"ステージ",boss:"力を解き放て！",combo:"コンボ！",damaged:"ダメージ！",newBest:"新記録！",finalLine:"ステージはあなたの声を忘れない。",menuLabel:"メインメニュー",newGame:"プレイ",continueGame:"プレイ",settings:"設定",quit:"終了",menuSubtitle:"反逆はその歌声から始まる",systemStatus:"システム準備完了",back:"戻る",menuBack:"メインメニュー",settingsTitle:"設定",languageSetting:"言語",quitMessage:"終了するにはブラウザのタブを閉じてください。",settingsNote:"使用する言語を選んでください。"}
 };
 const $=id=>document.getElementById(id),canvas=$("game"),ctx=canvas.getContext("2d"),app=$("app");
 const W=960,H=540,FLOOR=444;
@@ -155,7 +197,7 @@ try{best=Number(localStorage.getItem("ado-stage-best"))||0}catch(e){}
 for(let i=0;i<9;i++)beams.push({x:i*135,speed:35+(i%4)*13,width:30+(i%3)*18,alpha:.06+(i%4)*.025});
 function setLanguage(next){
  lang=translations[next]?next:"es";const t=translations[lang];document.documentElement.lang=lang;$("language").value=lang;
- const map={subtitle:"subtitle",score:"scoreLabel",health:"healthLabel",energy:"energyLabel",best:"bestLabel",help:"helpText",menuLabel:"menuLabel",newGame:"newGameText",continueGame:"continueText",settings:"settingsText",quit:"quitText",menuSubtitle:"menuSubtitle",systemStatus:"systemStatus",back:"backSettingsText",menuBack:"backMenuText",settingsTitle:"settingsTitle",languageSetting:"languageSettingLabel",pause:"pauseTitle",resume:"resumeText",settingsNote:"settingsNote"};
+ const map={subtitle:"subtitle",score:"scoreLabel",health:"healthLabel",energy:"energyLabel",best:"bestLabel",help:"helpText",menuLabel:"menuLabel",continueGame:"continueText",settings:"settingsText",quit:"quitText",menuSubtitle:"menuSubtitle",systemStatus:"systemStatus",back:"backSettingsText",menuBack:"backMenuText",settingsTitle:"settingsTitle",languageSetting:"languageSettingLabel",pause:"pauseTitle",resume:"resumeText",settingsNote:"settingsNote"};
  for(const [key,id] of Object.entries(map))$(id).textContent=t[key];
  $("leftBtn").title=t.left;$("rightBtn").title=t.right;$("jumpBtn").title=t.jump;$("attackBtn").title=t.attack;$("powerBtn").title=t.power;$("pauseButton").setAttribute("aria-label",t.pause);
  try{localStorage.setItem("ado-stage-language",lang)}catch(e){}
@@ -192,12 +234,8 @@ function resetGame(){
  Object.assign(player,{x:155,y:FLOOR-76,vy:0,grounded:true,invincible:0,attack:0,attackCooldown:0,facing:1,wasJump:false,wasAttack:false});
  Object.keys(touch).forEach(k=>touch[k]=false);updateStats();
 }
-async function startGame(){
- await enterFullscreen();resetGame();mode="playing";$("overlay").classList.add("hidden");
- $("stats").style.display="";$("controls").style.display="";$("helpText").style.display="";lastTime=performance.now();
-}
-$("newGameButton").addEventListener("click",startGame);
-$("continueButton").addEventListener("click",async()=>{if(score>0&&health>0&&mode!=="over"){await enterFullscreen();mode="playing";$("overlay").classList.add("hidden");lastTime=performance.now()}else startGame()});
+async function startGame(){await enterFullscreen();resetGame();mode="playing";$("overlay").classList.add("hidden");$("overlay").classList.remove("menu-screen");$("stats").style.display="";$("controls").style.display="";$("helpText").style.display="";lastTime=performance.now()}
+$("continueButton").addEventListener("click",async()=>{startGame()});
 $("settingsButton").addEventListener("click",()=>{$("settingsPanel").hidden=false;$("menuOptions").style.display="none";document.querySelector(".menu-art").style.display="none"});
 $("backSettingsButton").addEventListener("click",()=>{$("settingsPanel").hidden=true;$("menuOptions").style.display="";document.querySelector(".menu-art").style.display=""});
 $("quitButton").addEventListener("click",()=>{$("systemStatus").textContent=translations[lang].quitMessage});
@@ -239,7 +277,7 @@ function update(dt){
  for(const b of beams){b.x-=b.speed*dt;if(b.x+b.width<0)b.x=W+rand(0,200)}updateStats()
 }
 function updateStats(){$("scoreText").textContent=Math.floor(score).toString().padStart(6,"0");$("bestText").textContent=Math.floor(best).toString().padStart(6,"0");$("healthText").textContent=Math.ceil(health)+"%";$("energyText").textContent=Math.floor(energy)+"%";$("healthBar").style.width=Math.max(0,health)+"%";$("energyBar").style.width=Math.max(0,energy)+"%"}
-function endGame(){mode="over";newRecord=score>best;if(newRecord){best=Math.floor(score);try{localStorage.setItem("ado-stage-best",String(best))}catch(e){}}updateStats();showOverlay("over")}
+function endGame(){mode="over";newRecord=score>best;if(newRecord){best=Math.floor(score);try{localStorage.setItem("ado-stage-best",String(best))}catch(e){}}updateStats();showMainMenu()}
 function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(x,y,w,h)}
 function glow(color,blur){ctx.shadowColor=color;ctx.shadowBlur=blur}
 function drawBackground(){
@@ -278,5 +316,5 @@ function frame(now){const dt=Math.min((now-lastTime)/1000||0,.033);lastTime=now;
 let initialLanguage="es";try{const saved=localStorage.getItem("ado-stage-language");if(saved&&translations[saved])initialLanguage=saved}catch(e){}
 setLanguage(initialLanguage);updateStats();showMainMenu();lastTime=performance.now();requestAnimationFrame(frame);
 </script>
-</body>
+ </body>
 </html>
