@@ -3,574 +3,1260 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070710">
-<title>ADO | Dark Stage</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#070714">
+<title>ADO: RAGE OF THE STAGE</title>
 <style>
 :root {
-  --cyan: #00eaff;
-  --blue: #176bff;
-  --pink: #ff176b;
-  --red: #ff2449;
-  --bg: #070710;
-  --panel: #11111f;
-  --muted: #aaaabd;
+  --cyan:#00eaff;
+  --pink:#ff176b;
+  --blue:#2866ff;
+  --bg:#070714;
 }
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 90px;
-}
-
+* { box-sizing:border-box; }
 body {
-  background: var(--bg);
-  color: #fff;
-  font-family: Orbitron, "Noto Sans JP", sans-serif;
-  overflow-x: hidden;
+  margin:0;
+  background:var(--bg);
+  color:white;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+  touch-action:manipulation;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 15% 30%, #102c6555, transparent 45%),
-    radial-gradient(ellipse at 85% 60%, #790d3533, transparent 40%),
-    repeating-linear-gradient(
-      120deg,
-      transparent 0 80px,
-      #ffffff04 81px 82px
-    );
+button,select { font:inherit; }
+#app {
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  padding:10px;
+  gap:8px;
 }
-
-/* NAVIGATION */
-
-nav {
-  min-height: 80px;
-  padding: 18px 8%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  border-bottom: 1px solid #ffffff20;
-  background: #070710df;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  backdrop-filter: blur(12px);
+header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
 }
-
 .logo {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 5px;
-  color: white;
-  text-shadow: 3px 0 var(--pink), -3px 0 var(--cyan);
-  white-space: nowrap;
+  font-size:clamp(17px,4vw,29px);
+  font-weight:1000;
+  letter-spacing:3px;
+  text-shadow:3px 0 var(--pink),-3px 0 var(--cyan);
 }
-
-.nav-right,
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+.logo small {
+  display:block;
+  margin-top:5px;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--cyan);
+  text-shadow:none;
 }
-
-.nav-links a {
-  color: #ccc;
-  text-decoration: none;
-  font-size: 11px;
-  letter-spacing: 2px;
-  transition: color .2s;
+select,.ui-button {
+  background:#111126;
+  color:white;
+  border:1px solid #ffffff40;
+  border-radius:5px;
+  padding:10px;
+  cursor:pointer;
 }
-
-.nav-links a:hover {
-  color: var(--cyan);
+select:focus,.ui-button:focus-visible {
+  outline:2px solid var(--cyan);
 }
-
-#languageSelect {
-  background: #0b0b18;
-  color: var(--cyan);
-  border: 1px solid #00eaff88;
-  padding: 11px 10px;
-  font-family: inherit;
-  font-size: 11px;
-  cursor: pointer;
-  outline: none;
-  transition: .25s;
-  max-width: 140px;
+.stats {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px;
 }
-
-#languageSelect:hover,
-#languageSelect:focus {
-  border-color: var(--pink);
-  box-shadow: 0 0 18px #ff176b44;
+.stat {
+  background:#101020;
+  border:1px solid #ffffff16;
+  padding:9px;
+  min-width:0;
 }
-
-#languageSelect option {
-  background: #070710;
-  color: white;
+.stat label {
+  display:block;
+  color:#9393b0;
+  font-size:9px;
+  letter-spacing:1px;
+  margin-bottom:5px;
 }
-
-/* HERO */
-
-.hero {
-  min-height: 690px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 85px 10%;
-  overflow: hidden;
+.stat strong {
+  font-size:clamp(14px,3vw,21px);
+  font-weight:900;
 }
-
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 35%;
-  height: 130%;
-  top: -10%;
-  filter: blur(75px);
-  opacity: .17;
-  transform: rotate(25deg);
-  pointer-events: none;
+#healthText { color:#ff416e; }
+#energyText { color:var(--cyan); }
+.bar {
+  height:4px;
+  background:#ffffff15;
+  margin-top:7px;
+  overflow:hidden;
 }
-
-.hero::before {
-  left: 8%;
-  background: var(--blue);
+.bar div { height:100%; width:100%; transition:width .1s; }
+#healthBar { background:var(--pink); }
+#energyBar { background:var(--cyan); }
+#gameWrap {
+  position:relative;
+  border:1px solid #00eaff55;
+  background:#050510;
+  overflow:hidden;
+  box-shadow:0 0 30px #004cff16;
 }
-
-.hero::after {
-  right: 5%;
-  background: var(--pink);
+canvas {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  touch-action:none;
 }
-
-.content {
-  position: relative;
-  z-index: 2;
-  max-width: 760px;
+#overlay {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:15px;
+  background:#050510cc;
+  backdrop-filter:blur(5px);
 }
-
-.eyebrow {
-  color: var(--cyan);
-  letter-spacing: 5px;
-  font-size: 12px;
-  margin-bottom: 24px;
+#overlay.hidden { display:none; }
+.panel {
+  width:min(470px,100%);
+  border:1px solid #00eaff75;
+  background:linear-gradient(145deg,#111128ee,#090914ee);
+  padding:clamp(15px,4vw,30px);
+  box-shadow:0 0 35px #00eaff15;
 }
-
-.hero h1 {
-  font-size: clamp(65px, 12vw, 150px);
-  font-weight: 900;
-  line-height: .9;
-  letter-spacing: -7px;
-  text-shadow: 5px 0 var(--pink), -4px 0 var(--blue);
-  animation: flicker 5s infinite;
+.panel .kicker {
+  color:var(--pink);
+  letter-spacing:4px;
+  font-size:10px;
 }
-
-.hero h1 span {
-  display: block;
-  margin-top: 12px;
-  color: transparent;
-  -webkit-text-stroke: 1px white;
-  text-shadow: none;
-  letter-spacing: -4px;
+.panel h1 {
+  font-size:clamp(25px,6vw,46px);
+  line-height:1.05;
+  margin:13px 0;
+  text-shadow:3px 0 var(--pink),-2px 0 var(--blue);
 }
-
-.jp {
-  font-family: "Noto Sans JP", sans-serif;
-  font-size: 22px;
-  letter-spacing: 9px;
-  margin: 30px 0 15px;
-  color: #ddd;
+.panel p {
+  color:#b6b6cc;
+  line-height:1.6;
+  font-size:13px;
 }
-
-.desc {
-  font-family: Arial, sans-serif;
-  color: var(--muted);
-  line-height: 1.9;
-  max-width: 480px;
-  font-size: 15px;
+#mainButton {
+  border:0;
+  background:var(--cyan);
+  color:#070714;
+  padding:14px 20px;
+  width:100%;
+  font-weight:1000;
+  letter-spacing:2px;
+  cursor:pointer;
+  margin-top:10px;
 }
-
-.buttons {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-top: 32px;
+#mainButton:hover { box-shadow:0 0 24px #00eaff60; }
+#controls {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
 }
-
-.btn {
-  display: inline-block;
-  padding: 15px 24px;
-  text-decoration: none;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  font-weight: bold;
-  transition: .25s;
+.control {
+  min-height:56px;
+  color:white;
+  background:linear-gradient(145deg,#17172b,#0b0b17);
+  border:1px solid #ffffff30;
+  border-bottom:3px solid #00eaff77;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:none;
 }
-
-.primary {
-  background: var(--cyan);
-  color: #070710;
-  clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+.control.attack { border-bottom-color:var(--pink); }
+.control:active {
+  background:#29294a;
+  transform:translateY(1px);
 }
-
-.secondary {
-  border: 1px solid #ffffff50;
-  color: white;
+.help {
+  text-align:center;
+  color:#81819d;
+  font-size:11px;
+  line-height:1.5;
 }
-
-.btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 24px #00eaff44;
-}
-
-.stamp {
-  position: absolute;
-  right: 12%;
-  top: 23%;
-  width: 210px;
-  height: 210px;
-  border: 1px solid #ff176b88;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  color: var(--pink);
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-align: center;
-  transform: rotate(15deg);
-  box-shadow: 0 0 45px #ff176b22, inset 0 0 40px #ff176b11;
-}
-
-.stamp b {
-  font-size: 60px;
-  position: absolute;
-  color: #ff176b22;
-}
-
-/* SECTIONS */
-
-.section {
-  padding: 85px 10%;
-  border-top: 1px solid #ffffff18;
-}
-
-.section-label {
-  color: var(--pink);
-  font-size: 11px;
-  letter-spacing: 5px;
-  margin-bottom: 16px;
-}
-
-.section h2 {
-  font-size: clamp(28px, 5vw, 48px);
-  line-height: 1.35;
-  margin-bottom: 35px;
-}
-
-.accent-cyan {
-  color: var(--cyan);
-}
-
-.accent-pink {
-  color: var(--pink);
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.card {
-  min-height: 205px;
-  padding: 25px;
-  background: linear-gradient(135deg, #141421, #0a0a12);
-  border: 1px solid #ffffff1b;
-  position: relative;
-  overflow: hidden;
-  transition: transform .3s, border-color .3s;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  border-color: var(--cyan);
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border: 20px solid #176bff18;
-  transform: rotate(45deg);
-  right: -30px;
-  bottom: -35px;
-  pointer-events: none;
-}
-
-.number {
-  color: var(--cyan);
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-
-.card h3 {
-  margin-top: 30px;
-  font-size: 19px;
-  line-height: 1.5;
-  position: relative;
-  z-index: 1;
-}
-
-.card p {
-  font-family: Arial, sans-serif;
-  color: #999;
-  margin-top: 12px;
-  font-size: 13px;
-  line-height: 1.8;
-  position: relative;
-  z-index: 1;
-}
-
-.quote {
-  text-align: center;
-  padding: 90px 20px;
-  background: linear-gradient(90deg, #08122b, #160815, #08122b);
-  font-size: clamp(20px, 4vw, 38px);
-  font-weight: 900;
-  letter-spacing: 2px;
-  line-height: 1.8;
-}
-
-.quote .highlight {
-  color: var(--pink);
-}
-
-/* FOOTER */
-
 footer {
-  padding: 30px 8%;
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-  color: #777;
-  font-size: 10px;
-  letter-spacing: 2px;
-  line-height: 1.8;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
+  color:#5e5e7b;
+  font-size:9px;
+  letter-spacing:1px;
+  padding:2px;
 }
-
-/* ANIMATION */
-
-@keyframes flicker {
-  0%, 94%, 97%, 100% { opacity: 1; }
-  95% { opacity: .75; }
-  96% { opacity: .95; }
+@media(min-width:800px) {
+  #app { padding:14px 20px; }
+  #controls { max-width:650px; width:100%; margin:auto; }
+  .control { min-height:49px; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-/* MOBILE */
-
-@media (max-width: 800px) {
-  nav {
-    padding: 18px 5%;
-    flex-wrap: wrap;
-  }
-
-  .nav-right {
-    width: 100%;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .nav-links {
-    gap: 14px;
-  }
-
-  .nav-links a {
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-
-  .hero {
-    min-height: 650px;
-    padding: 90px 7%;
-  }
-
-  .hero h1 {
-    font-size: clamp(55px, 11vw, 95px);
-    letter-spacing: -4px;
-  }
-
-  .hero h1 span {
-    letter-spacing: -3px;
-  }
-
-  .stamp {
-    right: 5%;
-    top: 5%;
-    width: 100px;
-    height: 100px;
-    font-size: 7px;
-    letter-spacing: 1px;
-    padding: 8px;
-  }
-
-  .stamp b {
-    font-size: 30px;
-  }
-
-  .eyebrow {
-    font-size: 10px;
-    letter-spacing: 3px;
-  }
-
-  .jp {
-    font-size: 17px;
-    letter-spacing: 5px;
-  }
-
-  .section {
-    padding: 65px 7%;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    min-height: 175px;
-  }
-
-  footer {
-    padding: 28px 7%;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 380px) {
-  .nav-links {
-    gap: 9px;
-  }
-
-  .nav-links a {
-    font-size: 9px;
-  }
-
-  #languageSelect {
-    padding: 9px 5px;
-    max-width: 105px;
-  }
-
-  .buttons {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .btn {
-    font-size: 10px;
-  }
+@media(max-width:420px) {
+  #app { padding:7px; }
+  .stats { gap:4px; }
+  .stat { padding:7px 5px; }
+  .stat label { font-size:8px; letter-spacing:0; }
+  .control { min-height:52px; font-size:12px; }
 }
 </style>
 </head>
-
 <body>
-
-<nav>
-  <div class="logo">ADO<span style="color:#00eaff">.</span></div>
-
-  <div class="nav-right">
-    <div class="nav-links">
-      <a href="#home" data-i18n="navHome">INICIO</a>
-      <a href="#world" data-i18n="navWorld">UNIVERSO</a>
-      <a href="#music" data-i18n="navMusic">MÚSICA</a>
+<div id="app">
+  <header>
+    <div class="logo">ADO // RAGE
+      <small id="subtitle">REBELIÓN DEL ESCENARIO</small>
     </div>
-
-    <select id="languageSelect" aria-label="Seleccionar idioma">
-      <option value="es">🇪🇸 ES</option>
-      <option value="en">🇬🇧 EN</option>
-      <option value="ja">🇯🇵 日本語</option>
-    </select>
-  </div>
-</nav>
-
-<main>
-
-  <section class="hero" id="home">
-    <div class="content">
-      <div class="eyebrow" data-i18n="eyebrow">
-        ✦ LA VOZ DE LA OSCURIDAD ✦
-      </div>
-
-      <h1>
-        <span id="heroLine1" style="display:none"></span>
-        <span id="heroLine2" style="display:none"></span>
-        <span id="heroTitle">ADO</span>
-        <span id="heroSubtitle">UNLEASH</span>
-      </h1>
-
-      <div class="jp" data-i18n="jp">叫べ。世界へ。</div>
-
-      <p class="desc" data-i18n="desc">
-        Una voz que rompe el silencio. Un escenario donde la oscuridad se convierte en energía. Entra en el universo del J-pop más intenso.
-      </p>
-
-      <div class="buttons">
-        <a class="btn primary" href="#music" data-i18n="explore">
-          EXPLORAR LA MÚSICA ↗
-        </a>
-
-        <a class="btn secondary" href="#world" data-i18n="enter">
-          ENTRAR AL UNIVERSO
-        </a>
-      </div>
+    <div style="display:flex;gap:6px">
+      <select id="language" aria-label="Language">
+        <option value="es">🇪🇸 ES</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="ja">🇯🇵 日本語</option>
+      </select>
+      <button class="ui-button" id="pauseButton">Ⅱ</button>
     </div>
+  </header>
 
-    <div class="stamp">
-      <b>アド</b>
-      <span data-i18n="stamp">POP OSCURO ✦ JAPÓN</span>
+  <section class="stats">
+    <div class="stat">
+      <label id="scoreLabel">PUNTUACIÓN</label>
+      <strong id="scoreText">000000</strong>
+    </div>
+    <div class="stat">
+      <label id="healthLabel">VIDA</label>
+      <strong id="healthText">100%</strong>
+      <div class="bar"><div id="healthBar"></div></div>
+    </div>
+    <div class="stat">
+      <label id="energyLabel">ENERGÍA</label>
+      <strong id="energyText">0%</strong>
+      <div class="bar"><div id="energyBar"></div></div>
+    </div>
+    <div class="stat">
+      <label id="bestLabel">RÉCORD</label>
+      <strong id="bestText">000000</strong>
     </div>
   </section>
 
-  <section class="section" id="world">
-    <div class="section-label" data-i18n="worldLabel">
-      01 / EL UNIVERSO
+  <div id="gameWrap">
+    <canvas id="game" width="960" height="540"
+      aria-label="Juego de acción rítmica. Usa los controles para saltar y atacar.">
+    </canvas>
+
+    <div id="overlay">
+      <div class="panel">
+        <div class="kicker" id="kicker">✦ THE VOICE OF REBELLION ✦</div>
+        <h1 id="overlayTitle">RAGE OF<br>THE STAGE</h1>
+        <p id="overlayDesc">
+          El concierto ha sido invadido.<br>
+          Salta, ataca y recupera el escenario.
+        </p>
+        <p id="overlayHint">← → MOVER · ESPACIO SALTAR · X ATACAR</p>
+        <button id="mainButton">▶ COMENZAR</button>
+      </div>
     </div>
+  </div>
 
-    <h2>
-      <span data-i18n="worldTitle1">BIENVENIDO AL</span>
-      <span class="accent-cyan" data-i18n="worldTitle2">CAOS.</span>
-    </h2>
+  <div id="controls">
+    <button class="control" id="leftBtn">◀ IZQ.</button>
+    <button class="control" id="jumpBtn">⬆ SALTAR</button>
+    <button class="control attack" id="attackBtn">✦ ATACAR</button>
+    <button class="control" id="rightBtn">DER. ▶</button>
+  </div>
 
-    <div class="cards">
-      <article class="card">
-        <div class="number">01 / VOICE</div>
-        <h3 data-i18n="voiceTitle">Emoción pura.</h3>
-        <p data-i18n="voiceDesc">
+  <div class="help" id="helpText">
+    Esquiva los pinchos · Destruye enemigos · Recoge notas musicales para cargar tu poder
+  </div>
+
+  <footer>
+    <span>ADO // FAN-MADE GAME</span>
+    <span>FIGHT WITH YOUR VOICE ✦</span>
+  </footer>
+</div>
+
+<script>
+"use strict";
+
+/* ===========================
+   IDIOMAS
+=========================== */
+const words = {
+  es: {
+    subtitle:"REBELIÓN DEL ESCENARIO",
+    score:"PUNTUACIÓN", health:"VIDA", energy:"ENERGÍA", best:"RÉCORD",
+    kicker:"✦ LA VOZ DE LA REBELIÓN ✦",
+    title:"RABIA EN<br>EL ESCENARIO",
+    intro:"El concierto ha sido invadido.<br>Salta, ataca y recupera el escenario.",
+    hint:"← → MOVER · ESPACIO SALTAR · X ATACAR",
+    start:"▶ COMENZAR", resume:"▶ CONTINUAR",
+    restart:"↻ VOLVER A JUGAR", pause:"JUEGO EN PAUSA",
+    paused:"Respira. El escenario te espera.",
+    over:"EL CONCIERTO HA TERMINADO",
+    result:"Puntuación final: ",
+    help:"Esquiva los pinchos · Destruye enemigos · Recoge notas musicales para cargar tu poder",
+    left:"◀ IZQ.", right:"DER. ▶", jump:"⬆ SALTAR", attack:"✦ ATACAR",
+    stage:"ESCENARIO", note:"NOTA MUSICAL", enemy:"RIVAL",
+    boss:"¡ENERGÍA DESATADA!", perfect:"¡COMBO!", damaged:"¡GOLPE!",
+    newBest:"¡NUEVO RÉCORD!",
+    finalLine:"El escenario nunca olvida tu voz."
+  },
+  en: {
+    subtitle:"STAGE REBELLION",
+    score:"SCORE", health:"HEALTH", energy:"ENERGY", best:"BEST",
+    kicker:"✦ THE VOICE OF REBELLION ✦",
+    title:"RAGE OF<br>THE STAGE",
+    intro:"The concert has been invaded.<br>Jump, attack, and reclaim the stage.",
+    hint:"← → MOVE · SPACE JUMP · X ATTACK",
+    start:"▶ START GAME", resume:"▶ RESUME",
+    restart:"↻ PLAY AGAIN", pause:"GAME PAUSED",
+    paused:"Take a breath. The stage awaits.",
+    over:"THE CONCERT IS OVER",
+    result:"Final score: ",
+    help:"Dodge spikes · Defeat enemies · Collect music notes to charge your power",
+    left:"◀ LEFT", right:"RIGHT ▶", jump:"⬆ JUMP", attack:"✦ ATTACK",
+    stage:"STAGE", note:"MUSIC NOTE", enemy:"RIVAL",
+    boss:"POWER UNLEASHED!", perfect:"COMBO!", damaged:"HIT!",
+    newBest:"NEW HIGH SCORE!",
+    finalLine:"The stage never forgets your voice."
+  },
+  ja: {
+    subtitle:"ステージの反逆",
+    score:"スコア", health:"ライフ", energy:"エネルギー", best:"最高記録",
+    kicker:"✦ 反逆の歌声 ✦",
+    title:"ステージの<br>怒り",
+    intro:"コンサートが襲撃された！<br>跳び、戦い、ステージを取り戻せ。",
+    hint:"← → 移動 · SPACE ジャンプ · X 攻撃",
+    start:"▶ ゲーム開始", resume:"▶ 再開",
+    restart:"↻ もう一度", pause:"一時停止",
+    paused:"深呼吸して。ステージが待っている。",
+    over:"コンサート終了",
+    result:"最終スコア：",
+    help:"トゲを避けろ · 敵を倒せ · 音符を集めて力をためろ",
+    left:"◀ 左", right:"右 ▶", jump:"⬆ ジャンプ", attack:"✦ 攻撃",
+    stage:"ステージ", note:"音符", enemy:"ライバル",
+    boss:"力を解き放て！", perfect:"コンボ！", damaged:"ダメージ！",
+    newBest:"新記録！",
+    finalLine:"ステージはあなたの声を忘れない。"
+  }
+};
+
+let lang = "es";
+const $ = id => document.getElementById(id);
+
+function setLanguage(next) {
+  lang = words[next] ? next : "es";
+  const t = words[lang];
+  document.documentElement.lang = lang;
+  $("subtitle").textContent = t.subtitle;
+  $("scoreLabel").textContent = t.score;
+  $("healthLabel").textContent = t.health;
+  $("energyLabel").textContent = t.energy;
+  $("bestLabel").textContent = t.best;
+  $("leftBtn").textContent = t.left;
+  $("rightBtn").textContent = t.right;
+  $("jumpBtn").textContent = t.jump;
+  $("attackBtn").textContent = t.attack;
+  $("helpText").textContent = t.help;
+  $("language").value = lang;
+
+  if (mode === "menu") showOverlay("menu");
+  else if (mode === "paused") showOverlay("paused");
+  else if (mode === "over") showOverlay("over");
+}
+$("language").addEventListener("change", e => setLanguage(e.target.value));
+
+/* ===========================
+   CANVAS Y ESCENARIO
+=========================== */
+const canvas = $("game");
+const ctx = canvas.getContext("2d");
+const W = canvas.width;
+const H = canvas.height;
+const FLOOR = 444;
+
+let mode = "menu";
+let lastTime = 0;
+let elapsed = 0;
+let score = 0;
+let best = 0;
+let health = 100;
+let energy = 0;
+let distance = 0;
+let spawnClock = 0;
+let noteClock = 0;
+let shake = 0;
+let flash = 0;
+let combo = 0;
+let comboTimer = 0;
+let bossAnnounced = false;
+let newRecord = false;
+
+try {
+  best = Number(localStorage.getItem("ado-stage-best")) || 0;
+} catch(e) {}
+
+const player = {
+  x:155, y:FLOOR-76, w:44, h:76,
+  vy:0, speed:300, grounded:true,
+  invincible:0, attack:0, attackCooldown:0,
+  facing:1
+};
+
+let obstacles = [];
+let enemies = [];
+let notes = [];
+let particles = [];
+let floatingTexts = [];
+let beams = [];
+let keys = Object.create(null);
+let touch = {left:false,right:false};
+let previousJump = false;
+let previousAttack = false;
+
+for (let i=0;i<9;i++) {
+  beams.push({
+    x:i*135,
+    speed:35+(i%4)*13,
+    width:30+(i%3)*18,
+    alpha:.06+(i%4)*.025
+  });
+}
+
+function rand(a,b) {
+  return a+Math.random()*(b-a);
+}
+
+function rect(x,y,w,h,color) {
+  ctx.fillStyle=color;
+  ctx.fillRect(x,y,w,h);
+}
+
+function glow(color,blur) {
+  ctx.shadowColor=color;
+  ctx.shadowBlur=blur;
+}
+
+function resetGame() {
+  score=0;
+  health=100;
+  energy=0;
+  elapsed=0;
+  distance=0;
+  spawnClock=.7;
+  noteClock=1.8;
+  shake=0;
+  flash=0;
+  combo=0;
+  comboTimer=0;
+  bossAnnounced=false;
+  newRecord=false;
+  obstacles=[];
+  enemies=[];
+  notes=[];
+  particles=[];
+  floatingTexts=[];
+  player.x=155;
+  player.y=FLOOR-player.h;
+  player.vy=0;
+  player.grounded=true;
+  player.invincible=0;
+  player.attack=0;
+  player.attackCooldown=0;
+  player.facing=1;
+  keys=Object.create(null);
+  touch.left=false;
+  touch.right=false;
+  previousJump=false;
+  previousAttack=false;
+  updateStats();
+}
+
+function updateStats() {
+  $("scoreText").textContent=Math.floor(score).toString().padStart(6,"0");
+  $("bestText").textContent=Math.floor(best).toString().padStart(6,"0");
+  $("healthText").textContent=Math.ceil(health)+"%";
+  $("energyText").textContent=Math.floor(energy)+"%";
+  $("healthBar").style.width=Math.max(0,health)+"%";
+  $("energyBar").style.width=Math.max(0,energy)+"%";
+}
+
+/* ===========================
+   MENÚ, PAUSA Y FIN
+=========================== */
+function showOverlay(type) {
+  const t=words[lang];
+  $("overlay").classList.remove("hidden");
+
+  if (type==="menu") {
+    $("kicker").textContent=t.kicker;
+    $("overlayTitle").innerHTML=t.title;
+    $("overlayDesc").innerHTML=t.intro;
+    $("overlayHint").textContent=t.hint;
+    $("mainButton").textContent=t.start;
+  } else if (type==="paused") {
+    $("kicker").textContent="✦ "+t.pause+" ✦";
+    $("overlayTitle").textContent=t.pause;
+    $("overlayDesc").textContent=t.paused;
+    $("overlayHint").textContent=t.hint;
+    $("mainButton").textContent=t.resume;
+  } else {
+    $("kicker").textContent=newRecord?t.newBest:"✦ "+t.finalLine+" ✦";
+    $("overlayTitle").textContent=t.over;
+    $("overlayDesc").textContent=t.result+Math.floor(score).toLocaleString();
+    $("overlayHint").textContent=t.finalLine;
+    $("mainButton").textContent=t.restart;
+  }
+}
+
+function startGame() {
+  if (mode==="menu" || mode==="over") resetGame();
+  mode="playing";
+  $("overlay").classList.add("hidden");
+  lastTime=performance.now();
+}
+
+function togglePause() {
+  if (mode==="playing") {
+    mode="paused";
+    showOverlay("paused");
+  } else if (mode==="paused") {
+    mode="playing";
+    $("overlay").classList.add("hidden");
+    lastTime=performance.now();
+  }
+}
+
+$("mainButton").addEventListener("click",()=>{
+  if (mode==="paused") {
+    mode="playing";
+    $("overlay").classList.add("hidden");
+    lastTime=performance.now();
+  } else startGame();
+});
+
+$("pauseButton").addEventListener("click",togglePause);
+
+/* ===========================
+   CONTROLES DE TECLADO
+=========================== */
+window.addEventListener("keydown",e=>{
+  const k=e.key.toLowerCase();
+  if (["arrowleft","arrowright","arrowup"," ","x","z"].includes(k)) e.preventDefault();
+
+  if (k==="escape" || k==="p") {
+    togglePause();
+    return;
+  }
+
+  if ((k===" " || k==="arrowup" || k==="w") && mode==="menu") {
+    startGame();
+    return;
+  }
+
+  keys[k]=true;
+});
+
+window.addEventListener("keyup",e=>{
+  keys[e.key.toLowerCase()]=false;
+});
+
+window.addEventListener("blur",()=>{
+  if (mode==="playing") togglePause();
+});
+
+/* ===========================
+   CONTROLES TÁCTILES
+=========================== */
+function bindHold(id,property) {
+  const el=$(id);
+
+  const down=e=>{
+    e.preventDefault();
+    touch[property]=true;
+    try { el.setPointerCapture(e.pointerId); } catch(err) {}
+  };
+
+  const up=e=>{
+    e.preventDefault();
+    touch[property]=false;
+  };
+
+  el.addEventListener("pointerdown",down);
+  el.addEventListener("pointerup",up);
+  el.addEventListener("pointercancel",up);
+  el.addEventListener("lostpointercapture",up);
+}
+
+bindHold("leftBtn","left");
+bindHold("rightBtn","right");
+
+let jumpQueued=false;
+let attackQueued=false;
+
+$("jumpBtn").addEventListener("pointerdown",e=>{
+  e.preventDefault();
+  jumpQueued=true;
+});
+
+$("attackBtn").addEventListener("pointerdown",e=>{
+  e.preventDefault();
+  attackQueued=true;
+});
+
+/* ===========================
+   EFECTOS Y COMBATE
+=========================== */
+function burst(x,y,color,count=12) {
+  for (let i=0;i<count;i++) {
+    const a=rand(0,Math.PI*2);
+    const s=rand(50,260);
+    particles.push({
+      x,y,
+      vx:Math.cos(a)*s,
+      vy:Math.sin(a)*s,
+      life:rand(.2,.65),
+      max:.65,
+      size:rand(2,6),
+      color
+    });
+  }
+}
+
+function textEffect(x,y,text,color) {
+  floatingTexts.push({x,y,text,color,life:.9});
+}
+
+function damage(amount) {
+  if (player.invincible>0 || mode!=="playing") return;
+  health=Math.max(0,health-amount);
+  player.invincible=.9;
+  shake=12;
+  flash=.17;
+  combo=0;
+  burst(player.x+player.w/2,player.y+player.h/2,"#ff174f",18);
+  textEffect(player.x,player.y-10,words[lang].damaged,"#ff416e");
+
+  if (health<=0) endGame();
+}
+
+function attack() {
+  if (player.attackCooldown>0 || mode!=="playing") return;
+  player.attack=.22;
+  player.attackCooldown=.3;
+  energy=Math.min(100,energy+4);
+
+  const reach=player.facing===1?player.x+player.w:player.x-95;
+  const left=player.facing===1?player.x:player.x-95;
+  const right=player.facing===1?player.x+115:player.x+player.w;
+
+  burst(
+    player.facing===1?player.x+player.w+15:player.x-15,
+    player.y+player.h*.45,
+    "#00eaff",7
+  );
+
+  for (const enemy of enemies) {
+    if (!enemy.dead &&
+        enemy.x+enemy.w>left &&
+        enemy.x<right &&
+        enemy.y+enemy.h>player.y+8 &&
+        enemy.y<player.y+player.h) {
+      enemy.dead=true;
+      score+=150;
+      energy=Math.min(100,energy+15);
+      combo++;
+      comboTimer=2;
+      burst(enemy.x+enemy.w/2,enemy.y+enemy.h/2,"#ff176b",20);
+      textEffect(enemy.x,enemy.y-10,"+"+150,"#00eaff");
+      if (combo>=3) textEffect(player.x,player.y-25,words[lang].perfect,"#ff176b");
+    }
+  }
+}
+
+function unleash() {
+  if (energy<100 || mode!=="playing") return;
+  energy=0;
+  flash=.32;
+  shake=18;
+
+  burst(player.x+player.w/2,player.y+player.h/2,"#00eaff",55);
+  burst(player.x+player.w/2,player.y+player.h/2,"#ff176b",35);
+  textEffect(player.x-20,player.y-35,words[lang].boss,"#00eaff");
+
+  for (const enemy of enemies) {
+    if (!enemy.dead) {
+      enemy.dead=true;
+      score+=200;
+      burst(enemy.x,enemy.y,"#ff176b",14);
+    }
+  }
+
+  for (const obstacle of obstacles) {
+    if (obstacle.type==="spike") obstacle.dead=true;
+  }
+  score+=100;
+}
+
+/* ===========================
+   ACTUALIZACIÓN DEL JUEGO
+=========================== */
+function update(dt) {
+  if (mode!=="playing") return;
+
+  elapsed+=dt;
+  distance+=dt*(240+Math.min(elapsed*4,220));
+  score+=dt*10;
+  comboTimer-=dt;
+
+  if (comboTimer<=0) combo=0;
+
+  player.invincible=Math.max(0,player.invincible-dt);
+  player.attack=Math.max(0,player.attack-dt);
+  player.attackCooldown=Math.max(0,player.attackCooldown-dt);
+  shake=Math.max(0,shake-dt*35);
+  flash=Math.max(0,flash-dt);
+
+  const left=keys.arrowleft||keys.a||touch.left;
+  const right=keys.arrowright||keys.d||touch.right;
+  const jump=keys[" "]||keys.arrowup||keys.w||jumpQueued;
+  const hit=keys.x||keys.z||attackQueued;
+
+  if (left) {
+    player.x-=player.speed*dt;
+    player.facing=-1;
+  }
+  if (right) {
+    player.x+=player.speed*dt;
+    player.facing=1;
+  }
+
+  player.x=Math.max(18,Math.min(W-player.w-18,player.x));
+
+  if (jump && !previousJump && player.grounded) {
+    player.vy=-660;
+    player.grounded=false;
+    burst(player.x+player.w/2,FLOOR,"#00eaff",7);
+  }
+
+  if (hit && !previousAttack) attack();
+
+  previousJump=!!jump;
+  previousAttack=!!hit;
+  jumpQueued=false;
+  attackQueued=false;
+
+  if (keys.c) unleash();
+
+  player.vy+=1650*dt;
+  player.y+=player.vy*dt;
+
+  if (player.y+player.h>=FLOOR) {
+    player.y=FLOOR-player.h;
+    player.vy=0;
+    player.grounded=true;
+  }
+
+  const speed=300+Math.min(elapsed*5,230);
+
+  spawnClock-=dt;
+  if (spawnClock<=0) {
+    spawnClock=rand(.85,1.5)*Math.max(.55,1-elapsed*.003);
+
+    if (Math.random()<.53) {
+      obstacles.push({
+        x:W+25,y:FLOOR-32,w:rand(30,45),h:32,
+        type:"spike",dead:false
+      });
+    } else {
+      enemies.push({
+        x:W+30,y:FLOOR-48,w:38,h:48,
+        phase:rand(0,6),dead:false
+      });
+    }
+  }
+
+  noteClock-=dt;
+  if (noteClock<=0) {
+    noteClock=rand(1.4,2.5);
+    notes.push({
+      x:W+20,
+      y:FLOOR-rand(90,205),
+      phase:rand(0,6),
+      dead:false
+    });
+  }
+
+  for (const o of obstacles) {
+    o.x-=speed*dt;
+    if (o.dead) continue;
+
+    if (collide(
+      player.x+7,player.y+player.h-20,player.w-14,20,
+      o.x+5,o.y+7,o.w-10,o.h-7
+    )) {
+      damage(18);
+      o.dead=true;
+    }
+  }
+
+  for (const e of enemies) {
+    e.x-=(speed+30)*dt;
+    e.phase+=dt*4;
+    e.y=FLOOR-e.h+Math.sin(e.phase)*3;
+
+    if (e.dead) continue;
+
+    if (collide(
+      player.x+7,player.y+6,player.w-14,player.h-10,
+      e.x+5,e.y+5,e.w-10,e.h-5
+    )) {
+      if (player.vy>180) {
+        e.dead=true;
+        player.vy=-360;
+        score+=120;
+        energy=Math.min(100,energy+12);
+        burst(e.x,e.y,"#ff176b",14);
+      } else damage(15);
+    }
+  }
+
+  for (const n of notes) {
+    n.x-=speed*dt;
+    n.phase+=dt*4;
+
+    if (n.dead) continue;
+    const nx=n.x;
+    const ny=n.y+Math.sin(n.phase)*6;
+
+    if (collide(player.x,player.y,player.w,player.h,nx-15,ny-15,30,30)) {
+      n.dead=true;
+      score+=100;
+      energy=Math.min(100,energy+24);
+      combo++;
+      comboTimer=2.3;
+      burst(nx,ny,"#00eaff",18);
+      textEffect(nx,ny-15,"+100","#00eaff");
+    }
+  }
+
+  for (const p of particles) {
+    p.x+=p.vx*dt;
+    p.y+=p.vy*dt;
+    p.vy+=350*dt;
+    p.life-=dt;
+  }
+
+  for (const t of floatingTexts) {
+    t.y-=35*dt;
+    t.life-=dt;
+  }
+
+  obstacles=obstacles.filter(o=>o.x+o.w>-30&&!o.dead);
+  enemies=enemies.filter(e=>e.x+e.w>-30&&!e.dead);
+  notes=notes.filter(n=>n.x>-30&&!n.dead);
+  particles=particles.filter(p=>p.life>0);
+  floatingTexts=floatingTexts.filter(t=>t.life>0);
+
+  for (const b of beams) {
+    b.x-=b.speed*dt;
+    if (b.x+b.width<0) b.x=W+rand(0,200);
+  }
+
+  if (energy>=100 && !bossAnnounced) {
+    bossAnnounced=true;
+    textEffect(W/2-100,125,words[lang].boss,"#00eaff");
+  }
+  if (energy<100) bossAnnounced=false;
+
+  updateStats();
+}
+
+function collide(ax,ay,aw,ah,bx,by,bw,bh) {
+  return ax<bx+bw && ax+aw>bx && ay<by+bh && ay+ah>by;
+}
+
+function endGame() {
+  mode="over";
+  newRecord=score>best;
+
+  if (newRecord) {
+    best=Math.floor(score);
+    try { localStorage.setItem("ado-stage-best",String(best)); } catch(e) {}
+  }
+
+  updateStats();
+  showOverlay("over");
+}
+
+/* ===========================
+   DIBUJO DEL ESCENARIO
+=========================== */
+function drawBackground() {
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,"#09091c");
+  g.addColorStop(.65,"#15102c");
+  g.addColorStop(1,"#070711");
+  rect(0,0,W,H,g);
+
+  // Luna eléctrica
+  glow("#2866ff",30);
+  ctx.fillStyle="#12204b";
+  ctx.beginPath();
+  ctx.arc(760,105,52,0,Math.PI*2);
+  ctx.fill();
+  ctx.shadowBlur=0;
+
+  // Rayos del escenario
+  ctx.save();
+  for (const b of beams) {
+    ctx.globalAlpha=b.alpha;
+    ctx.fillStyle="#00eaff";
+    ctx.beginPath();
+    ctx.moveTo(b.x,0);
+    ctx.lineTo(b.x+b.width,0);
+    ctx.lineTo(b.x+b.width+100,FLOOR);
+    ctx.lineTo(b.x+55,FLOOR);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // Siluetas de público
+  for (let i=0;i<32;i++) {
+    const x=i*33-(distance*.18%33);
+    const h=24+(i*17%30);
+    rect(x,FLOOR-h,25,h,"#0a0a18");
+    ctx.fillStyle=i%5===0?"#ff176b55":"#00eaff22";
+    ctx.beginPath();
+    ctx.arc(x+12,FLOOR-h-9,8,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // Suelo
+  rect(0,FLOOR,W,H-FLOOR,"#0b0b1a");
+  rect(0,FLOOR,W,3,"#00eaff");
+  glow("#00eaff",16);
+  rect(0,FLOOR,W,1,"#00eaff");
+  ctx.shadowBlur=0;
+
+  // Líneas de escenario
+  for (let i=0;i<18;i++) {
+    const x=(i*90-distance*.6%90);
+    rect(x,FLOOR+20,45,2,"#242447");
+  }
+
+  // Rótulo decorativo
+  ctx.save();
+  ctx.globalAlpha=.13;
+  ctx.fillStyle="#ffffff";
+  ctx.font="900 32px Arial";
+  ctx.fillText("叫べ。世界へ。",30,65);
+  ctx.restore();
+}
+
+/* Dibuja al protagonista como una silueta original */
+function drawPlayer() {
+  const x=player.x,y=player.y;
+  const cx=x+player.w/2;
+  const run=Math.sin(elapsed*15)*5;
+  const blink=player.invincible>0&&Math.floor(elapsed*18)%2===0;
+
+  if (blink) return;
+
+  ctx.save();
+
+  // Aura
+  glow(player.attack>0?"#00eaff":"#176bff",player.attack>0?30:15);
+  ctx.fillStyle="#13182f";
+  ctx.beginPath();
+  ctx.ellipse(cx,y+player.h/2,27,42,0,0,Math.PI*2);
+  ctx.fill();
+  ctx.shadowBlur=0;
+
+  // Capa
+  ctx.fillStyle="#17162d";
+  ctx.beginPath();
+  ctx.moveTo(cx-9,y+25);
+  ctx.lineTo(cx-27-run,y+61);
+  ctx.lineTo(cx-19-run,y+70);
+  ctx.lineTo(cx+3,y+50);
+  ctx.lineTo(cx+16,y+70);
+  ctx.lineTo(cx+18,y+25);
+  ctx.closePath();
+  ctx.fill();
+
+  // Piernas
+  ctx.strokeStyle="#090912";
+  ctx.lineWidth=9;
+  ctx.lineCap="round";
+  ctx.beginPath();
+  ctx.moveTo(cx-8,y+53);
+  ctx.lineTo(cx-10+run,y+70);
+  ctx.moveTo(cx+7,y+53);
+  ctx.lineTo(cx+13-run,y+70);
+  ctx.stroke();
+
+  // Botas
+  ctx.strokeStyle="#00eaff";
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  ctx.moveTo(cx-17+run,y+72);
+  ctx.lineTo(cx-5+run,y+72);
+  ctx.moveTo(cx+6-run,y+72);
+  ctx.lineTo(cx+20-run,y+72);
+  ctx.stroke();
+
+  // Brazos
+  ctx.strokeStyle="#242442";
+  ctx.lineWidth=8;
+  ctx.beginPath();
+  ctx.moveTo(cx-10,y+28);
+  ctx.lineTo(cx-20,y+43);
+  ctx.moveTo(cx+10,y+28);
+  ctx.lineTo(cx+19,y+41);
+  ctx.stroke();
+
+  // Cabeza
+  glow("#ff176b",8);
+  ctx.fillStyle="#e4dce8";
+  ctx.beginPath();
+  ctx.arc(cx,y+14,13,0,Math.PI*2);
+  ctx.fill();
+  ctx.shadowBlur=0;
+
+  // Cabello
+  ctx.fillStyle="#17152d";
+  ctx.beginPath();
+  ctx.moveTo(cx-13,y+14);
+  ctx.lineTo(cx-18,y+1);
+  ctx.lineTo(cx-4,y+6);
+  ctx.lineTo(cx+3,y-2);
+  ctx.lineTo(cx+7,y+7);
+  ctx.lineTo(cx+15,y+2);
+  ctx.lineTo(cx+12,y+20);
+  ctx.lineTo(cx+2,y+13);
+  ctx.lineTo(cx-6,y+19);
+  ctx.closePath();
+  ctx.fill();
+
+  // Visor y rostro abstracto
+  ctx.fillStyle="#00eaff";
+  ctx.fillRect(cx-10,y+13,20,4);
+  ctx.fillStyle="#ff176b";
+  ctx.fillRect(cx+2,y+13,8,2);
+
+  // Chaqueta
+  ctx.fillStyle="#292842";
+  ctx.beginPath();
+  ctx.moveTo(cx-11,y+25);
+  ctx.lineTo(cx+10,y+25);
+  ctx.lineTo(cx+15,y+50);
+  ctx.lineTo(cx-13,y+50);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle="#00eaff";
+  ctx.fillRect(cx-2,y+27,4,21);
+
+  // Ataque de energía
+  if (player.attack>0) {
+    const ax=player.facing===1?x+player.w+5:x-80;
+    const grad=ctx.createLinearGradient(ax,0,ax+80,0);
+    grad.addColorStop(0,"#00eaff00");
+    grad.addColorStop(.5,"#00eaffcc");
+    grad.addColorStop(1,"#ff176b00");
+
+    glow("#00eaff",25);
+    ctx.fillStyle=grad;
+    ctx.beginPath();
+    ctx.moveTo(ax,y+15);
+    ctx.lineTo(ax+80,y+35);
+    ctx.lineTo(ax+55,y+52);
+    ctx.lineTo(ax,y+48);
+    ctx.closePath();
+    ctx.fill();
+    ctx.shadowBlur=0;
+  }
+
+  ctx.restore();
+}
+
+function drawSpike(o) {
+  glow("#ff176b",12);
+  ctx.fillStyle="#ff174f";
+  ctx.beginPath();
+  ctx.moveTo(o.x,o.y+o.h);
+  ctx.lineTo(o.x+o.w*.5,o.y);
+  ctx.lineTo(o.x+o.w,o.y+o.h);
+  ctx.closePath();
+  ctx.fill();
+  ctx.shadowBlur=0;
+  ctx.strokeStyle="#ffb2d0";
+  ctx.lineWidth=2;
+  ctx.stroke();
+}
+
+function drawEnemy(e) {
+  const x=e.x,y=e.y;
+  ctx.save();
+  glow("#ff176b",15);
+
+  ctx.fillStyle="#32122f";
+  ctx.beginPath();
+  ctx.moveTo(x+5,y+15);
+  ctx.lineTo(x+12,y+3);
+  ctx.lineTo(x+19,y+12);
+  ctx.lineTo(x+29,y+2);
+  ctx.lineTo(x+35,y+17);
+  ctx.lineTo(x+33,y+39);
+  ctx.lineTo(x+4,y+39);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.shadowBlur=0;
+  ctx.fillStyle="#ff176b";
+  ctx.fillRect(x+8,y+17,7,4);
+  ctx.fillRect(x+23,y+17,7,4);
+  ctx.fillStyle="#00eaff";
+  ctx.fillRect(x+13,y+32,13,3);
+
+  ctx.strokeStyle="#ff176b";
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  ctx.moveTo(x+8,y+39);
+  ctx.lineTo(x+4,y+47);
+  ctx.moveTo(x+30,y+39);
+  ctx.lineTo(x+35,y+47);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawNote(n) {
+  const x=n.x;
+  const y=n.y+Math.sin(n.phase)*6;
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(Math.sin(n.phase)*.15);
+  glow("#00eaff",20);
+  ctx.strokeStyle="#00eaff";
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  ctx.arc(0,0,11,0,Math.PI*2);
+  ctx.stroke();
+  ctx.fillStyle="#fff";
+  ctx.fillRect(-2,-10,4,20);
+  ctx.fillRect(-8,-2,16,4);
+  ctx.shadowBlur=0;
+  ctx.restore();
+}
+
+function drawParticles() {
+  for (const p of particles) {
+    ctx.globalAlpha=Math.max(0,p.life/p.max);
+    glow(p.color,8);
+    rect(p.x,p.y,p.size,p.size,p.color);
+  }
+  ctx.globalAlpha=1;
+  ctx.shadowBlur=0;
+
+  for (const t of floatingTexts) {
+    ctx.globalAlpha=Math.min(1,t.life*2);
+    glow(t.color,10);
+    ctx.fillStyle=t.color;
+    ctx.font="900 19px Arial";
+    ctx.fillText(t.text,t.x,t.y);
+  }
+  ctx.globalAlpha=1;
+  ctx.shadowBlur=0;
+}
+
+function draw() {
+  ctx.save();
+
+  if (shake>0) {
+    ctx.translate(rand(-shake,shake),rand(-shake,shake));
+  }
+
+  drawBackground();
+
+  for (const o of obstacles) drawSpike(o);
+  for (const n of notes) drawNote(n);
+  for (const e of enemies) drawEnemy(e);
+
+  drawPlayer();
+  drawParticles();
+
+  // Indicador de poder especial
+  if (energy>=100) {
+    const pulse=.65+Math.sin(elapsed*9)*.35;
+    ctx.globalAlpha=pulse;
+    glow("#00eaff",18);
+    ctx.strokeStyle="#00eaff";
+    ctx.lineWidth=3;
+    ctx.strokeRect(18,18,190,35);
+    ctx.fillStyle="#00eaff";
+    ctx.font="900 15px Arial";
+    ctx.fillText("C: "+words[lang].boss,28,41);
+    ctx.globalAlpha=1;
+    ctx.shadowBlur=0;
+  }
+
+  if (flash>0) {
+    ctx.globalAlpha=Math.min(.5,flash*1.6);
+    rect(0,0,W,H,"#00eaff");
+    ctx.globalAlpha=1;
+  }
+
+  // Indicador de dificultad
+  ctx.fillStyle="#aaaacc";
+  ctx.globalAlpha=.65;
+  ctx.font="11px Arial";
+  ctx.fillText(words[lang].stage+" // "+String(Math.floor(elapsed/10)+1).padStart(2,"0"),W-145,30);
+  ctx.globalAlpha=1;
+
+  ctx.restore();
+}
+
+/* ===========================
+   BUCLE PRINCIPAL
+=========================== */
+function frame(now) {
+  const dt=Math.min((now-lastTime)/1000||0,.033);
+  lastTime=now;
+
+  if (mode==="playing") update(dt);
+  else {
+    // Animación ambiental incluso en el menú y la pausa.
+    for (const b of beams) {
+      b.x-=b.speed*dt*.3;
+      if (b.x+b.width<0) b.x=W+rand(0,200);
+    }
+  }
+
+  draw();
+  requestAnimationFrame(frame);
+}
+
+setLanguage("es");
+updateStats();
+showOverlay("menu");
+lastTime=performance.now();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
+voiceDesc">
           Voces explosivas, sentimientos sin filtro y una energía imposible de ignorar.
         </p>
       </article>
